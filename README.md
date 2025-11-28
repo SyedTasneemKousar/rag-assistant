@@ -1,5 +1,12 @@
 # 🤖 RAG Assistant - Intelligent Document Q&A System
 
+A full-stack AI application that allows users to upload documents and ask intelligent questions about them using RAG (Retrieval Augmented Generation) and Agentic AI.
+
+![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.104-green.svg)
+![React](https://img.shields.io/badge/React-18.2-blue.svg)
+![License](https://img.shields.io/badge/License-MIT-yellow.svg)
+
 ## 📋 Project Overview
 
 **RAG Assistant** is a full-stack AI application that allows users to upload documents and ask intelligent questions about them. It uses:
@@ -57,8 +64,9 @@ rag-assistant/
 │   ├── app/
 │   │   ├── main.py         # FastAPI app with API endpoints
 │   │   ├── rag_engine.py   # Core RAG logic (chunking, embeddings, retrieval)
+│   │   ├── rag_engine_demo.py  # Demo mode (free, no API required)
 │   │   ├── agent.py        # Agentic AI workflow
-│   │   └── models.py       # Pydantic models for API
+│   │   └── models.py      # Pydantic models for API
 │   ├── requirements.txt    # Python dependencies
 │   ├── Dockerfile          # Container configuration
 │   └── .env.example        # Environment variables template
@@ -71,6 +79,9 @@ rag-assistant/
 │   │       └── ChatInterface.jsx     # Chat Q&A UI
 │   ├── package.json        # Node dependencies
 │   └── Dockerfile          # Container configuration
+│
+├── data/
+│   └── sample_document.txt      # Sample document for testing
 │
 ├── docker-compose.yml      # Run both services together
 ├── azure-deploy.md        # Azure deployment guide
@@ -85,57 +96,79 @@ rag-assistant/
 
 - Python 3.11+
 - Node.js 18+
-- OpenAI API key ([Get one here](https://platform.openai.com/api-keys))
+- (Optional) OpenAI API key for full AI features
 
-### Step 1: Setup Backend
+### Option 1: Demo Mode (Free - No API Key Required)
 
-```bash
-# Navigate to backend
-cd rag-assistant/backend
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/YOUR_USERNAME/rag-assistant.git
+   cd rag-assistant
+   ```
 
-# Create virtual environment
-python -m venv venv
+2. **Setup Backend**
+   ```bash
+   cd backend
+   python -m venv venv
+   
+   # Windows
+   venv\Scripts\activate
+   
+   # Mac/Linux
+   source venv/bin/activate
+   
+   pip install -r requirements.txt
+   
+   # Create .env file for demo mode
+   echo "USE_DEMO_MODE=true" > .env
+   
+   # Start server
+   uvicorn app.main:app --host 127.0.0.1 --port 8000
+   ```
 
-# Activate virtual environment
-# Windows:
-venv\Scripts\activate
-# Mac/Linux:
-source venv/bin/activate
+3. **Setup Frontend** (in a new terminal)
+   ```bash
+   cd frontend
+   npm install
+   npm start
+   ```
 
-# Install dependencies
-pip install -r requirements.txt
+4. **Open in browser**: http://localhost:3000
 
-# Create .env file
-copy .env.example .env
-# Edit .env and add your OPENAI_API_KEY
+### Option 2: Full Mode (With OpenAI API)
 
-# Run the server
-uvicorn app.main:app --reload
-```
+1. **Get OpenAI API Key**: https://platform.openai.com/api-keys
 
-Backend will run on `http://localhost:8000`
+2. **Setup Backend**
+   ```bash
+   cd backend
+   python -m venv venv
+   venv\Scripts\activate  # Windows
+   pip install -r requirements.txt
+   
+   # Create .env file
+   echo "OPENAI_API_KEY=sk-your-key-here" > .env
+   
+   uvicorn app.main:app --host 127.0.0.1 --port 8000
+   ```
 
-### Step 2: Setup Frontend
+3. **Setup Frontend** (same as Option 1)
 
-```bash
-# Open new terminal, navigate to frontend
-cd rag-assistant/frontend
+---
 
-# Install dependencies
-npm install
+## 🎯 Demo Mode vs Full Mode
 
-# Run the app
-npm start
-```
+| Feature | Demo Mode (Free) | Full Mode (Paid) |
+|---------|------------------|------------------|
+| Document Upload | ✅ | ✅ |
+| Text Extraction | ✅ | ✅ |
+| Chunking | ✅ | ✅ |
+| Search Method | Keyword Matching | Vector Embeddings |
+| Answer Quality | Good | Excellent (AI-generated) |
+| Cost | **FREE** | ~$0.001-0.01 per query |
+| Agentic AI | ❌ | ✅ |
 
-Frontend will run on `http://localhost:3000`
-
-### Step 3: Use the Application
-
-1. Open `http://localhost:3000` in your browser
-2. Upload a PDF/TXT/DOCX document
-3. Wait for processing (you'll see "chunks processed" message)
-4. Ask questions about the document!
+**To enable Demo Mode**: Set `USE_DEMO_MODE=true` in `backend/.env`
 
 ---
 
@@ -354,29 +387,29 @@ print(response.json())
 
 ### Backend Issues
 
-**Problem**: `ModuleNotFoundError`
+**Problem**: `ModuleNotFoundError`  
 **Solution**: Make sure virtual environment is activated and dependencies are installed
 
-**Problem**: `OPENAI_API_KEY not set`
-**Solution**: Create `.env` file in `backend/` directory with `OPENAI_API_KEY=your_key`
+**Problem**: `OPENAI_API_KEY not set`  
+**Solution**: Create `.env` file in `backend/` directory with `OPENAI_API_KEY=your_key` or use `USE_DEMO_MODE=true` for free mode
 
-**Problem**: Port 8000 already in use
+**Problem**: Port 8000 already in use  
 **Solution**: Change port: `uvicorn app.main:app --port 8001`
 
 ### Frontend Issues
 
-**Problem**: Cannot connect to backend
+**Problem**: Cannot connect to backend  
 **Solution**: Check `REACT_APP_API_URL` in `.env` or ensure backend is running
 
-**Problem**: `npm install` fails
+**Problem**: `npm install` fails  
 **Solution**: Delete `node_modules` and `package-lock.json`, then run `npm install` again
 
 ### Docker Issues
 
-**Problem**: Container won't start
+**Problem**: Container won't start  
 **Solution**: Check logs: `docker-compose logs`
 
-**Problem**: Environment variables not working
+**Problem**: Environment variables not working  
 **Solution**: Ensure `.env` file exists and variables are set correctly
 
 ---
@@ -384,11 +417,17 @@ print(response.json())
 ## 📝 Environment Variables
 
 ### Backend (.env)
+
 ```env
+# For Full Mode (with OpenAI)
 OPENAI_API_KEY=sk-your-key-here
+
+# For Demo Mode (free, no API needed)
+USE_DEMO_MODE=true
 ```
 
 ### Frontend (.env)
+
 ```env
 REACT_APP_API_URL=http://localhost:8000
 ```
@@ -443,7 +482,3 @@ For questions or issues:
 ---
 
 **Happy Coding! 🚀**
-
-
-#   r a g - a s s i s t a n t  
- 

@@ -52,6 +52,10 @@ Thumbs.db
 *.log
 logs/
 
+# Exports
+exports/
+backend/exports/
+
 # Test files (optional - remove if you want to commit tests)
 test_*.py
 *_test.py

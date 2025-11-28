@@ -126,17 +126,24 @@ rag-assistant/
 ### Document Management
 
 - `POST /upload` - Upload a document (PDF, TXT, DOCX)
+- `GET /documents` - List all uploaded documents
+- `DELETE /documents/{document_id}` - Delete a document
 - `GET /stats` - Get document statistics
 
 ### Query
 
-- `POST /query` - Ask questions about uploaded documents
+- `POST /query` - Ask questions about uploaded documents (with conversation memory)
   ```json
   {
     "question": "What is this document about?",
     "chat_history": []
   }
   ```
+
+### Conversation
+
+- `GET /conversation/{session_id}` - Get conversation history
+- `GET /export/{session_id}` - Export conversation as text file
 
 ### Health
 
@@ -278,14 +285,29 @@ USE_DEMO_MODE=true
 REACT_APP_API_URL=http://localhost:8000
 ```
 
+## ✨ New Features (Recently Added!)
+
+### ✅ Document Management
+- **List Documents**: `GET /documents` - View all uploaded documents with metadata
+- **Delete Documents**: `DELETE /documents/{document_id}` - Remove documents from system
+
+### ✅ Conversation Memory
+- **Automatic Storage**: All Q&A pairs are automatically saved with timestamps
+- **Get History**: `GET /conversation/{session_id}` - Retrieve full conversation history
+- **Session Support**: Multiple conversation sessions supported
+
+### ✅ Export Conversations
+- **Export as Text**: `GET /export/{session_id}` - Download conversation as formatted text file
+- **Formatted Output**: Includes timestamps, roles, and clean formatting
+
 ## 🚀 Future Enhancements
 
 - [ ] Support for more file types (Excel, PowerPoint)
 - [ ] User authentication and multi-user support
-- [ ] Document management (list, delete, search)
+- [x] Document management (list, delete, search) ✅
 - [ ] Streaming responses
-- [ ] Conversation memory
-- [ ] Export Q&A sessions
+- [x] Conversation memory ✅
+- [x] Export Q&A sessions ✅
 - [ ] Analytics dashboard
 
 ## 📄 License

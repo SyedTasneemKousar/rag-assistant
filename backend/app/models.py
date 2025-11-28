@@ -25,3 +25,24 @@ class UploadResponse(BaseModel):
     message: str
     document_id: str
     chunks_processed: int
+
+
+class DocumentInfo(BaseModel):
+    """Information about an uploaded document"""
+    document_id: str
+    filename: str
+    chunks: int
+    upload_date: Optional[str] = None
+
+
+class DocumentListResponse(BaseModel):
+    """Response with list of documents"""
+    documents: List[DocumentInfo]
+    total: int
+
+
+class ConversationMessage(BaseModel):
+    """Single message in conversation"""
+    role: str  # "user" or "assistant"
+    content: str
+    timestamp: Optional[str] = None

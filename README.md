@@ -482,24 +482,9 @@ Built as a portfolio project demonstrating:
 - Full-stack development
 - Cloud deployment
 
----
 
-## 🙏 Acknowledgments
 
-- LangChain team for excellent documentation
-- OpenAI for GPT models
-- FastAPI for the amazing framework
-- React team for the frontend library
 
----
 
-## 📞 Support
 
-For questions or issues:
-1. Check the troubleshooting section
-2. Review the code comments (extensive explanations included)
-3. Check LangChain/FastAPI documentation
 
----
-
-**Happy Coding! 🚀**

@@ -334,8 +334,7 @@ print(response.json())
 
 ---
 
-## 📊 How to Explain This Project in Interviews
-
+##  Explain This Project
 ### 1. Problem Statement
 "I built a system that allows users to ask questions about uploaded documents using AI, solving the problem of quickly finding information in large documents."
 
